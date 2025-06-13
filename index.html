@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NodeJS + Express</title>
+</head>
+<body>
+  <input type="text" id="nome" placeholder="Nome" />
+  <input type="text" id="site" placeholder="Site" />
+  <button onclick="criarCliente()">Criar</button>
+
+  <h1>Listando Cadastros</h1>
+  <ul class="lista-clientes"></ul>
+
+  <script>
+  const apiURL = "http://localhost:3000/customers";
+
+  async function listarClientes() {
+    const dados = await fetch(apiURL);
+    const dadosJson = await dados.json();
+
+    const lista = document.querySelector(".lista-clientes");
+    lista.innerHTML = "";
+    dadosJson.forEach(cliente => {
+      const item = document.createElement("li");
+      item.innerText = `${cliente.nome} - ${cliente.site}`;
+      lista.appendChild(item);
+    });
+  }
+
+  function criarCliente() {
+    const nome = document.getElementById("nome").value;
+    const site = document.getElementById("site").value;
+
+    fetch(apiURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nome, site })
+    })
+      .then(() => listarClientes());
+  }
+
+  listarClientes();
+  </script>
+</body>
+</html>

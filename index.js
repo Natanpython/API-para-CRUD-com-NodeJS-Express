@@ -1,6 +1,8 @@
 const express = require("express");
+const cors = require("cors");
 const service = express();
 
+service.use(cors());
 service.use(express.json());
  
 let customers = [
@@ -57,4 +59,4 @@ service.get("/customers", (req, res) =>{
     return res.json(customers)
 })
 
-service.listen(3000);
+service.listen(3000, () => console.log("Rodando..."))
