@@ -5,6 +5,7 @@ let customers = [
         ];
 
 class CustomersController {
+    
     //Listagem de registros
     index(req, res){
         res.json(customers);
